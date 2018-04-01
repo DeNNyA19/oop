@@ -38,7 +38,8 @@ public class Utils {
                             packageName
                                     + '.'
                                     + filePath.substring(0, filePath.length() - 6)
-                                            .replace('\\', '.');
+                                            .replace('\\', '.')
+                                            .replace('/', '.');
                     classes.add(Class.forName(className));
                 }
             }

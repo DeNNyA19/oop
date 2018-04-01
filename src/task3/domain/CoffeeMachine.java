@@ -1,15 +1,15 @@
 package task3.domain;
 
-public class CoffeMachine extends Machine {
+public class CoffeeMachine extends Machine {
 
     private static final long serialVersionUID = 6943981680884360595L;
 
     private double capacity;
     private double energyConsumption;
 
-    public CoffeMachine() {}
+    public CoffeeMachine() {}
 
-    public CoffeMachine(double capacity, double energyConsumption) {
+    public CoffeeMachine(double capacity, double energyConsumption) {
         this.capacity = capacity;
         this.energyConsumption = energyConsumption;
     }
@@ -31,12 +31,18 @@ public class CoffeMachine extends Machine {
     }
 
     @Override
+    public void performWork() {
+        System.out.println("Make coffee");
+    }
+
+    @Override
     public String toString() {
-        return "CoffeMachine{"
+        return "CoffeeMachine{"
                 + "capacity="
                 + capacity
                 + ", energyConsumption="
                 + energyConsumption
-                + '}';
+                + "} "
+                + super.toString();
     }
 }

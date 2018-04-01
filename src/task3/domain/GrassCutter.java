@@ -13,4 +13,14 @@ public class GrassCutter extends Machine {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public void performWork() {
+        System.out.println("Cut grass");
+    }
+
+    @Override
+    public String toString() {
+        return "GrassCutter{" + "type='" + type + '\'' + "} " + super.toString();
+    }
 }

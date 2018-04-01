@@ -21,6 +21,11 @@ public class Computer extends Machine {
     }
 
     @Override
+    public void performWork() {
+        System.out.println("Compute smth");
+    }
+
+    @Override
     public String toString() {
         return "Computer{" + "processor='" + processor + '\'' + "} " + super.toString();
     }

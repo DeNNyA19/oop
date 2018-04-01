@@ -6,12 +6,19 @@ public class Car extends Machine {
 
     private String fuelType;
 
+    public Car() {}
+
     public String getFuelType() {
         return fuelType;
     }
 
     public void setFuelType(String fuelType) {
         this.fuelType = fuelType;
+    }
+
+    @Override
+    public void performWork() {
+        System.out.println("Drive");
     }
 
     @Override

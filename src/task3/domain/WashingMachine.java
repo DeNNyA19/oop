@@ -1,7 +1,5 @@
 package task3.domain;
 
-import task3.domain.Machine;
-
 public class WashingMachine extends Machine {
 
     private static final long serialVersionUID = -9061426040701420816L;
@@ -15,5 +13,14 @@ public class WashingMachine extends Machine {
     public void setCapacity(String capacity) {
         this.capacity = capacity;
     }
-}
 
+    @Override
+    public void performWork() {
+        System.out.println("Wash");
+    }
+
+    @Override
+    public String toString() {
+        return "WashingMachine{" + "capacity='" + capacity + '\'' + "} " + super.toString();
+    }
+}

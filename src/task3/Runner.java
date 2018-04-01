@@ -2,12 +2,24 @@ package task3;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import task3.domain.Machine;
+import task4.Plugin;
 import utils.Utils;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 public class Runner {
@@ -16,6 +28,7 @@ public class Runner {
     private static List<Machine> machines = new ArrayList<>();
 
     private static Map<Integer, String> actions = new HashMap<>();
+    private static Map<Integer, Plugin> plugins = new HashMap<>();
 
     private static Scanner scanner = new Scanner(System.in);
 
@@ -37,16 +50,21 @@ public class Runner {
         actions.put(5, "Serialize machines");
         actions.put(6, "Deserialize machines");
         actions.put(7, "Exit");
+
+        for (Plugin plugin : ServiceLoader.load(Plugin.class)) {
+            plugins.put(actions.size() + plugins.size() + 1, plugin);
+        }
     }
 
     public static void main(String[] args) throws Exception {
-        run();
-    }
 
-    private static void run() throws Exception {
         while (true) {
             System.out.println("\nAvailable actions:");
             actions.forEach((key, value) -> System.out.println(key + ". " + value));
+
+            System.out.println("\nAvailable plugins:");
+            plugins.forEach(
+                    (key, value) -> System.out.println(key + ". " + value.getDescription()));
 
             System.out.println("\nPlease choose one:");
 
@@ -74,6 +92,12 @@ public class Runner {
                     System.out.println("Bye-bye!");
                     return;
                 default:
+                    Plugin plugin = plugins.get(actionNum);
+                    if (plugin != null) {
+                        plugin.execute(machines);
+                        break;
+                    }
+
                     System.out.println("Unsupported action");
                     break;
             }
@@ -178,7 +202,6 @@ public class Runner {
         List<Machine> machines = new ArrayList<>();
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-            // FIXME
             try {
                 while (true) {
                     machines.add((Machine) ois.readObject());

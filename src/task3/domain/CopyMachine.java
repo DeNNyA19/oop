@@ -13,4 +13,14 @@ public class CopyMachine extends Machine {
     public void setInkType(String inkType) {
         this.inkType = inkType;
     }
+
+    @Override
+    public void performWork() {
+        System.out.println("Copy");
+    }
+
+    @Override
+    public String toString() {
+        return "CopyMachine{" + "inkType='" + inkType + '\'' + "} " + super.toString();
+    }
 }

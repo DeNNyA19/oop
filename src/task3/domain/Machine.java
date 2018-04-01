@@ -9,6 +9,8 @@ public abstract class Machine implements Serializable {
     private String serialNumber;
     private String color;
 
+    public abstract void performWork();
+
     public String getSerialNumber() {
         return serialNumber;
     }
