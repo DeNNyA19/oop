@@ -6,6 +6,16 @@ import task1.drawer.Drawer;
 
 public class TriangleDrawerImpl implements Drawer<Triangle> {
 
+    private static final TriangleDrawerImpl instance = new TriangleDrawerImpl();
+
+    private TriangleDrawerImpl() {
+
+    }
+
+    public static TriangleDrawerImpl getInstance() {
+        return instance;
+    }
+
     @Override
     public javafx.scene.shape.Shape draw(Triangle shape) {
         Polygon fxTriangle = new Polygon();

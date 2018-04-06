@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Plugin which collects statistics about colors of machines
+ */
 public class ColorStatisticsPlugin implements Plugin {
 
     @Override

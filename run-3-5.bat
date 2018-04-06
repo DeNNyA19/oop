@@ -8,6 +8,11 @@ cd out
 jar cf ../plugin-impl.jar task4/MachineRunnerPlugin.class task4/ColorStatisticsPlugin.class task5/ArchivePlugin.class task5/DeArchivePlugin.class ../META-INF
 cd ..
 
+javac -cp "plugin.jar;json-reader.jar" -d out src/task3/domain/Machine.java src/task6/JSONReaderPlugin.java
+cd out
+jar cf ../plugin-adapter.jar task6/JSONReaderPlugin.class META-INF
+cd ..
+
 javac -cp "commons-lang3-3.7.jar;plugin.jar" -d out src/task3/*.java src/task3/domain/*.java src/utils/*.java
 
-java -cp "out;commons-lang3-3.7.jar;plugin.jar;plugin-impl.jar" task3.Runner
+java -cp "out;commons-lang3-3.7.jar;plugin.jar;plugin-impl.jar;org.json.jar;json-reader.jar;plugin-adapter.jar" task3.Runner

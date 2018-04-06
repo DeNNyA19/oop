@@ -2,6 +2,9 @@ package task3.domain;
 
 import java.io.Serializable;
 
+/**
+ * Base parent class for machine classes hierarchy
+ */
 public abstract class Machine implements Serializable {
 
     private static final long serialVersionUID = -1872641596064542849L;

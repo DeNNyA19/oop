@@ -4,6 +4,9 @@ import task3.domain.Machine;
 
 import java.util.List;
 
+/**
+ * Plugin executes perform work of every machine
+ */
 public class MachineRunnerPlugin implements Plugin {
 
     @Override

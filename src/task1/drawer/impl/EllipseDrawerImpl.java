@@ -4,7 +4,17 @@ import javafx.scene.shape.Shape;
 import task1.entity.Ellipse;
 import task1.drawer.Drawer;
 
-public class EllipceDrawerImpl implements Drawer<Ellipse> {
+public class EllipseDrawerImpl implements Drawer<Ellipse> {
+
+    private static final EllipseDrawerImpl instance = new EllipseDrawerImpl();
+
+    private EllipseDrawerImpl() {
+
+    }
+
+    public static EllipseDrawerImpl getInstance() {
+        return instance;
+    }
 
     @Override
     public Shape draw(Ellipse shape) {

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class Runner {
 
     private static List<Class> machineClasses;
+    //machines list
     private static List<Machine> machines = new ArrayList<>();
 
     private static Map<Integer, String> actions = new HashMap<>();
@@ -35,6 +36,7 @@ public class Runner {
     static {
         Class<Machine> parentClz = Machine.class;
 
+        //getting classes from hierarchy
         machineClasses =
                 Utils.getClasses("task3.domain")
                         .stream()
@@ -51,6 +53,7 @@ public class Runner {
         actions.put(6, "Deserialize machines");
         actions.put(7, "Exit");
 
+        //Loading all classes from classpath that implements Plugin interface
         for (Plugin plugin : ServiceLoader.load(Plugin.class)) {
             plugins.put(actions.size() + plugins.size() + 1, plugin);
         }
@@ -58,7 +61,9 @@ public class Runner {
 
     public static void main(String[] args) throws Exception {
 
+        // user interface
         while (true) {
+            System.out.println("///////Menu///////");
             System.out.println("\nAvailable actions:");
             actions.forEach((key, value) -> System.out.println(key + ". " + value));
 
@@ -67,6 +72,7 @@ public class Runner {
                     (key, value) -> System.out.println(key + ". " + value.getDescription()));
 
             System.out.println("\nPlease choose one:");
+            System.out.println("//////Choose///////");
 
             int actionNum = scanner.nextInt();
             switch (actionNum) {
@@ -104,6 +110,11 @@ public class Runner {
         }
     }
 
+    /**
+     * Method adds Machine children object
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
     private static void handleAddAction() throws IllegalAccessException, InstantiationException {
         System.out.println("\nWhich object would you like to add?");
         int num = 0;
@@ -132,6 +143,10 @@ public class Runner {
         }
     }
 
+    /**
+     * Method modifies Machine sub object
+     * @throws IllegalAccessException
+     */
     private static void handleModifyAction() throws IllegalAccessException {
         System.out.println("Which machine would you like to modify?");
         int num = 0;
@@ -158,6 +173,9 @@ public class Runner {
         }
     }
 
+    /**
+     * Method deletes machine object from machines list
+     */
     private static void handleDeleteAction() {
         System.out.println("Which machine would you like to delete?");
         int num = 0;
@@ -190,6 +208,12 @@ public class Runner {
         deserialized.forEach(System.out::println);
     }
 
+    /**
+     * Method serializing machines to binary to selected file
+     * @param file selected file
+     * @param machines machines for serialization
+     * @throws IOException
+     */
     private static void serialize(File file, List<Machine> machines) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             for (Machine machine : machines) {
@@ -198,6 +222,13 @@ public class Runner {
         }
     }
 
+    /**
+     * Method deserializing machines from selected file
+     * @param file selected file
+     * @return list of machines
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     private static List<Machine> deserialize(File file) throws IOException, ClassNotFoundException {
         List<Machine> machines = new ArrayList<>();
 
@@ -212,6 +243,11 @@ public class Runner {
         }
     }
 
+    /**
+     * Method shows all params of class and modifies param of object
+     * @param machine selected machine subclass
+     * @throws IllegalAccessException
+     */
     private static void modify(Machine machine) throws IllegalAccessException {
         Class<? extends Machine> clz = machine.getClass();
         List<Field> fields =
