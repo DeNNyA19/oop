@@ -1,8 +1,5 @@
 package task1.entity;
 
-import task1.entity.Point;
-import task1.entity.Shape;
-
 public class Square extends Shape {
 
     private Point pointA;
@@ -10,7 +7,7 @@ public class Square extends Shape {
 
     public Square(Point a, double width) {
         this.pointA = a;
-        this.width =width;
+        this.width = width;
     }
 
     public Point getPointA() {

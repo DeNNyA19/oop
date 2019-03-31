@@ -13,6 +13,7 @@ public class JSONReaderPlugin implements Plugin {
 
     private final MachinesJSONReader writer = new MachinesJSONReader();
 
+
     @Override
     public void execute(List<Machine> machines) {
         writer.read(Paths.get("machines.json"));

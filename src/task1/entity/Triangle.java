@@ -1,8 +1,5 @@
 package task1.entity;
 
-import task1.entity.Point;
-import task1.entity.Shape;
-
 public class Triangle extends Shape {
 
     private Point pointA;

@@ -1,8 +1,6 @@
 package task1;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -26,10 +24,16 @@ import java.util.stream.Collectors;
  */
 public class Controller {
 
-    @FXML public AnchorPane base;
-    @FXML public ComboBox<String> dropDown;
-    @FXML public VBox inputContainer;
-    @FXML public Button addButton;
+    @FXML
+    public AnchorPane base;
+    @FXML
+    public ComboBox<String> dropDown;
+    @FXML
+    public VBox inputContainer;
+    @FXML
+    public Button addButton;
+    @FXML
+    public Button addStaticFigures;
 
     private Map<String, Class> shapeMap = new HashMap<>();
     private List<TextField> paramFields = new ArrayList<>();
@@ -54,32 +58,33 @@ public class Controller {
 
         //Handling dropdown actions
         dropDown.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        Class<? extends Shape> shapeClass = shapeMap.get(dropDown.getValue());
-                        Class[] params = getParams(shapeClass);
+                event -> {
+                    Class<? extends Shape> shapeClass = shapeMap.get(dropDown.getValue());
+                    Class[] params = getParams(shapeClass);
 
-                        ObservableList<Node> children = inputContainer.getChildren();
-                        children.clear();
+                    ObservableList<Node> children = inputContainer.getChildren();
+                    children.clear();
 
-                        generateParamFields(params, children);
-                    }
+                    generateParamFields(params, children);
                 });
         //Handling add button actions
         addButton.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        Shape shape = createShape(dropDown.getValue());
-                        Drawer drawer = DrawerFactory.get(shape.getClass());
-                        base.getChildren().add(drawer.draw(shape));
-                    }
+                event -> {
+                    Shape shape = createShape(dropDown.getValue());
+                    Drawer drawer = DrawerFactory.get(shape.getClass());
+                    base.getChildren().add(drawer.draw(shape));
                 });
+        addStaticFigures.setOnAction(
+                event -> Main.STATIC_SHAPE_LIST.forEach(shape -> {
+                    Drawer drawer = DrawerFactory.get(shape.getClass());
+                    base.getChildren().add(drawer.draw(shape));
+                })
+        );
     }
 
     /**
      * Method creates shapes
+     *
      * @param shapeName shape name
      * @return object of class Shape
      */
@@ -125,7 +130,8 @@ public class Controller {
 
     /**
      * Method generates text fields for each shape for the application view
-     * @param params params of the shape object
+     *
+     * @param params   params of the shape object
      * @param children list of children of shape
      */
     private void generateParamFields(Class[] params, ObservableList<Node> children) {
@@ -150,6 +156,7 @@ public class Controller {
 
     /**
      * Getting params of class
+     *
      * @param shapeClass shape class
      * @return array of classes of params of shape class
      */
