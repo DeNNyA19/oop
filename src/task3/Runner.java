@@ -1,9 +1,9 @@
 package task3;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.reflections.Reflections;
 import task3.domain.Component;
 import task4.Plugin;
-import utils.Utils;
 
 import java.io.*;
 import java.lang.reflect.Field;
@@ -24,14 +24,7 @@ public class Runner {
     private static Map<Integer, Plugin> plugins = new HashMap<>();
 
     static {
-        Class<Component> parentClz = Component.class;
-        componentClasses =
-                Utils.getClasses("task3.domain")
-                        .stream()
-                        .filter(clz -> clz.getSuperclass().equals(parentClz))
-                        .filter(clz -> !Modifier.isAbstract(clz.getModifiers()))
-                        .filter(clz -> !clz.isInterface())
-                        .collect(Collectors.toList());
+        componentClasses = new ArrayList<>(new Reflections().getSubTypesOf(Component.class));
 
         actions.put(1, "Add component");
         actions.put(2, "Modify component");
@@ -55,9 +48,9 @@ public class Runner {
             System.out.println("\nAvailable actions:");
             actions.forEach((key, value) -> System.out.println(key + ". " + value));
 
-            /*System.out.println("\nAvailable plugins:");
+            System.out.println("\nAvailable plugins:");
             plugins.forEach(
-                    (key, value) -> System.out.println(key + ". " + value.getDescription()));*/
+                    (key, value) -> System.out.println(key + ". " + value.getDescription()));
 
             System.out.println("\nPlease choose one:");
             System.out.println("//////Choose///////");
