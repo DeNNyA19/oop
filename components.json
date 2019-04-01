@@ -1,0 +1,13 @@
+{
+  "components": [
+    {
+      "type": "SystemBlock",
+      "processor":"AMD",
+      "ram": "16GB"
+    },
+    {
+      "type": "Keyboard",
+      "size":"32"
+    }
+  ]
+}

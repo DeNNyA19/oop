@@ -1,6 +1,6 @@
 package task5;
 
-import task3.domain.Machine;
+import task3.domain.Component;
 import task4.Plugin;
 
 import java.io.File;
@@ -15,19 +15,19 @@ import java.util.zip.ZipOutputStream;
 public class ArchivePlugin implements Plugin {
 
     @Override
-    public void execute(List<Machine> machines) {
+    public void execute(List<Component> components) {
 
-        File bin = new File("machines.bin");
+        File bin = new File("components.bin");
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(bin));
                 ZipOutputStream out = new ZipOutputStream(new FileOutputStream("tmp.zip"))) {
 
-            for (Machine machine : machines) {
-                oos.writeObject(machine);
+            for (Component component : components) {
+                oos.writeObject(component);
             }
 
-            out.putNextEntry(new ZipEntry("machines.bin"));
+            out.putNextEntry(new ZipEntry("components.bin"));
 
-            try (FileInputStream in = new FileInputStream("machines.bin")) {
+            try (FileInputStream in = new FileInputStream("components.bin")) {
                 byte[] b = new byte[1024];
                 int count;
 

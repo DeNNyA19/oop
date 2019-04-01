@@ -16,3 +16,9 @@ cd ..
 javac -cp "commons-lang3-3.7.jar;plugin.jar" -d out src/task3/*.java src/task3/domain/*.java src/utils/*.java
 
 java -cp "out;commons-lang3-3.7.jar;plugin.jar;plugin-impl.jar;org.json.jar;json-reader.jar;plugin-adapter.jar" task3.Runner
+
+
+javac -d out src/task3/domain/Component.java src/task4/Joystick.java src/task4/ComponentBuyerPlugin.java src/task4/Plugin.java
+cd out
+jar cf ../plugin.jar task4/Plugin.class task4/ComponentBuyerPlugin.class task4/Joystick.class task3/domain/Component.class
+cd ..

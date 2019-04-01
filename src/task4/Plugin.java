@@ -1,6 +1,6 @@
 package task4;
 
-import task3.domain.Machine;
+import task3.domain.Component;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface Plugin {
 
-    void execute(List<Machine> machines);
+    void execute(List<Component> components);
 
     String getDescription();
 }

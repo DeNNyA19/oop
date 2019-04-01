@@ -1,6 +1,6 @@
 package task6;
 
-import task3.domain.Machine;
+import task3.domain.Component;
 import task4.Plugin;
 
 import java.nio.file.Paths;
@@ -15,8 +15,8 @@ public class JSONReaderPlugin implements Plugin {
 
 
     @Override
-    public void execute(List<Machine> machines) {
-        writer.read(Paths.get("machines.json"));
+    public void execute(List<Component> components) {
+        writer.read(Paths.get("components.json"));
     }
 
     @Override

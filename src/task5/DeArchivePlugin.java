@@ -1,6 +1,6 @@
 package task5;
 
-import task3.domain.Machine;
+import task3.domain.Component;
 import task4.Plugin;
 
 import java.io.EOFException;
@@ -18,7 +18,7 @@ import java.util.zip.ZipInputStream;
 public class DeArchivePlugin implements Plugin {
 
     @Override
-    public void execute(List<Machine> machines) {
+    public void execute(List<Component> components) {
 
         try (ZipInputStream zis = new ZipInputStream(new FileInputStream("tmp.zip"))) {
 
@@ -27,7 +27,7 @@ public class DeArchivePlugin implements Plugin {
             while (ze != null) {
 
                 String fileName = ze.getName();
-                if (!Objects.equals(fileName, "machines.bin")) {
+                if (!Objects.equals(fileName, "components.bin")) {
                     continue;
                 }
 
@@ -44,12 +44,12 @@ public class DeArchivePlugin implements Plugin {
                 ze = zis.getNextEntry();
             }
 
-            List<Machine> machinesDec = new ArrayList<>();
+            List<Component> machinesDec = new ArrayList<>();
             try (ObjectInputStream ois =
                     new ObjectInputStream(new FileInputStream("machinesDECOMPR.bin"))) {
 
                 while (true) {
-                    machinesDec.add((Machine) ois.readObject());
+                    machinesDec.add((Component) ois.readObject());
                 }
 
             } catch (EOFException ex) {
