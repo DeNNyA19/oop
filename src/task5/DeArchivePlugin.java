@@ -12,26 +12,29 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class DeArchivePlugin implements Plugin {
 
+    private static Scanner scanner = new Scanner(System.in);
+
     @Override
     public void execute(List<Component> components) {
-
-        try (ZipInputStream zis = new ZipInputStream(new FileInputStream("tmp.zip"))) {
+        System.out.println("\nEnter the name of unarchiving file:");
+        String fileName = scanner.next();
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(fileName))) {
 
             ZipEntry ze = zis.getNextEntry();
 
             while (ze != null) {
 
-                String fileName = ze.getName();
-                if (!Objects.equals(fileName, "components.bin")) {
+                if (!Objects.equals(ze.getName(), ze.getName().replace(".zip", ".bin"))) {
                     continue;
                 }
 
-                try (FileOutputStream fos = new FileOutputStream(new File("machinesDECOMPR.bin"))) {
+                try (FileOutputStream fos = new FileOutputStream(new File(fileName.replace(".zip", "UNARCHIVED.bin")))) {
 
                     int len;
                     byte[] buffer = new byte[1024];
@@ -46,14 +49,14 @@ public class DeArchivePlugin implements Plugin {
 
             List<Component> machinesDec = new ArrayList<>();
             try (ObjectInputStream ois =
-                    new ObjectInputStream(new FileInputStream("machinesDECOMPR.bin"))) {
+                    new ObjectInputStream(new FileInputStream(fileName.replace(".zip", "UNARCHIVED.bin")))) {
 
                 while (true) {
                     machinesDec.add((Component) ois.readObject());
                 }
 
             } catch (EOFException ex) {
-                System.out.println("\nDecompresed and deserialized from zip:");
+                System.out.println("\nUnarchived and deserialized from zip:");
                 machinesDec.forEach(System.out::println);
             }
 

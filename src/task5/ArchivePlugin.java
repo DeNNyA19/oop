@@ -9,25 +9,29 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class ArchivePlugin implements Plugin {
 
+    private static Scanner scanner = new Scanner(System.in);
+
     @Override
     public void execute(List<Component> components) {
-
-        File bin = new File("components.bin");
+        System.out.println("\nEnter the name of archiving file:");
+        String fileName = scanner.next();
+        File bin = new File(fileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(bin));
-                ZipOutputStream out = new ZipOutputStream(new FileOutputStream("tmp.zip"))) {
+                ZipOutputStream out = new ZipOutputStream(new FileOutputStream(fileName.replace(".bin", ".zip")))) {
 
             for (Component component : components) {
                 oos.writeObject(component);
             }
 
-            out.putNextEntry(new ZipEntry("components.bin"));
+            out.putNextEntry(new ZipEntry(fileName));
 
-            try (FileInputStream in = new FileInputStream("components.bin")) {
+            try (FileInputStream in = new FileInputStream(fileName)) {
                 byte[] b = new byte[1024];
                 int count;
 
